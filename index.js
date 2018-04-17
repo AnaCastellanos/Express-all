@@ -4,8 +4,10 @@ const morgan = require('morgan'); //Middleware.
 const app = express(); //Express nos da una función inicial que se asigna a una constante.
 
 //Configuraciones
-app.set('appName', 'Mi primer Server'); //Agregar nueva configuración
+app.set('appName', 'Mi primer Server'); //Agregar nueva configuración.
+app.set('views', __dirname + '/views'); //__dirname muestra nuestra ruta actual, indicamos la ruta donde se ecuentra la carpeta views.
 
+app.set('view engine', 'ejs'); //Instalar motor de plantilla: Templates
 
 //Middlewares
 app.use(morgan('combined')); //Morgan hace lo mismo que el middleware de abajo.
@@ -24,7 +26,7 @@ app.get('/', (req, res) => {  //Require: Toda la información que el navegador e
 
 //Agregamos más rutas
 app.get('/login', (req, res) => {
-	res.end('Aqui va el login');
+	res.render('index.ejs'); //Carga el template (renderiza una vista)
 });
 
 //Para todas las rutas no especificadas.
