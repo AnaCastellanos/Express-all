@@ -3,6 +3,10 @@ const express = require('express'); //Instanciamos express
 const morgan = require('morgan'); //Middleware.
 const app = express(); //Express nos da una función inicial que se asigna a una constante.
 
+//Requiriendo rutas
+const routes = require('./routes');
+const routesApi = require('./routes-api');
+
 //Configuraciones
 app.set('appName', 'Mi primer Server'); //Agregar nueva configuración.
 app.set('views', __dirname + '/views'); //__dirname muestra nuestra ruta actual, indicamos la ruta donde se ecuentra la carpeta views.
@@ -18,16 +22,9 @@ app.use(morgan('combined')); //Morgan hace lo mismo que el middleware de abajo.
 // });
 
 
-//Rutas
-//Ruta inicial
-app.get('/', (req, res) => {  //Require: Toda la información que el navegador esta pidiendo.
-	res.end('Hola Mundo'); //Response: Respuesta por parte del servidor.
-});
-
-//Agregamos más rutas
-app.get('/login', (req, res) => {
-	res.render('index.ejs'); //Carga el template (renderiza una vista)
-});
+//Rutas con middleware
+app.use(routes); //Importa las rutas de routes
+app.use('/api', routesApi);
 
 //Para todas las rutas no especificadas.
 app.get('*', (req, res) => {
